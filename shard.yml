@@ -1,0 +1,9 @@
+name: yandex-translator
+version: 0.1.0
+
+authors:
+  - Ivan <vanya.neytrino@yandex.ru>
+
+crystal: 0.30.1
+
+license: MIT
