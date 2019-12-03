@@ -1,7 +1,6 @@
 require "./yandex/translator.cr"
 
 module Yandex
-  VERSION = "0.1.0"
-  raise Exception.new("Some error")
+  VERSION = "0.2.0"
   # TODO: Put your code here
 end
