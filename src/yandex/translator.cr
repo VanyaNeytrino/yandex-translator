@@ -22,12 +22,10 @@ module Yandex
       lang ? lang.as_h["lang"] : nil
     end
 
-    def translate(text, *lang)
-      if lang.last.is_a?(Hash)
-        lang = leng_params(lang.last)
-      end
+    def translate(text, lang)
+      lang = leng_params(lang) if lang.is_a?(Hash)
 
-      options = { text: text, lang: lang}
+      options = { text: text, lang: lang }
 
       response = visit("/translate", options)
       if response
@@ -36,7 +34,7 @@ module Yandex
       end
     end
 
-    def visit(address, options = {} of String => String)
+    def visit(address, options = {} of Symbol => String)
       uri = URI.encode("#{BASE_URL}#{address}?key=#{@@api_key}&#{params(options)}")
       response = HTTP::Client.post(uri,
                                    headers: HTTP::Headers{"Content-Type" => "application/json; charset=utf-8"})
@@ -51,11 +49,11 @@ module Yandex
     end
 
     private def params(options)
-      options.map{|k,v| "#{k.to_s}=#{v.to_s}"}.join('&').to_s
+      options.map{ |k,v| "#{k.to_s}=#{v.to_s}" }.join('&').to_s
     end
 
     private def leng_params(options)
-      options.map{|k,v| "#{k.to_s}-#{v.to_s}"}.join('&')
+      options.map{ |k,v| "#{k.to_s}-#{v.to_s}" }.join('&')
     end
 
     private def encode(string : String, *args)
